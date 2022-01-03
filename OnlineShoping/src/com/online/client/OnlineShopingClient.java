@@ -15,14 +15,9 @@ public static void main(String[] args) {
 			System.out.println("Enter Choice : ");
 			int choice=scanner.nextInt();
 		onlineShopingPresentation.performMenu(choice);
-	System.out.println("----------------------------------------------");
-	if(choice==2) {
-		onlineShopingPresentation.showSubMenu();
-		System.out.println("Enter Choice : ");
-		int ch=scanner.nextInt();
-	onlineShopingPresentation.performSubMenu(ch);
+	
 	}
-		}
+		
 }
 }
 

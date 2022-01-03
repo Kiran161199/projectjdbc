@@ -34,35 +34,20 @@ public class ProductBillPay {
 	public double getGst() {
 		return gst;
 	}
-
-
-
 	public void setGst(double gst) {
 		this.gst = gst;
 	}
-
-
 
 	public double getTotal() {
 		return total;
 	}
 
-
-
 	public void setTotal(double total) {
 		this.total = total;
 	}
-
-
 
 	@Override
 	public String toString() {
 		return "ProductBillPay [buyingProduct=" + buyingProduct + ", gst=" + gst + ", total=" + total + "]";
 	}
-
-
-
-
-
-
 }

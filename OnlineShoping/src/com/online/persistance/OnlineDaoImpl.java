@@ -58,7 +58,8 @@ public class OnlineDaoImpl implements OnlineDao{
 				int pId = resultSet.getInt("PRODUCT_ID");
 				String pName = resultSet.getString("PRODUCT_NAME");
 				int pCost = resultSet.getInt("PRODUCT_COST");
-				ViewProducts Shoping=new ViewProducts(pId,pName,pCost);
+				int pavail=resultSet.getInt("PRODUCT_AVAIL");
+				ViewProducts Shoping=new ViewProducts(pId,pName,pCost,pavail);
 				viewProducts.add(Shoping);
 			}
 
@@ -69,25 +70,38 @@ public class OnlineDaoImpl implements OnlineDao{
 		
 	
 	@Override
-	public  BuyingProducts buyingProducts(String buyproduct) throws ClassNotFoundException, SQLException {
-		BuyingProducts buyprod=null;
+	public int buyingProducts(String productName,int productcost) throws ClassNotFoundException, SQLException {
 		Connection connection=OracleConnection.getConnection();
-		PreparedStatement preparedStatement=connection.prepareStatement("SELECT * FROM PRODUCTS WHERE PRODUCT_NAME=?");
-		preparedStatement.setString(1, buyproduct);
-ResultSet resultSet = preparedStatement.executeQuery();
-		
-		if (resultSet.next()) {
-			int prodId=resultSet.getInt("PRODUCT_ID");
-			String prodName=resultSet.getString("PRODUCT_Name");
-			int prodCost=resultSet.getInt("PRODUCT_cost");
-			buyprod=new BuyingProducts(prodName,prodId,prodCost);
-		
-		}
+		PreparedStatement preparedStatement=connection.prepareStatement("SELECT * FROM PRODUCTS WHERE PRODUCT_NAME=? AND PRODUCT_COST=?");
+		preparedStatement.setString(1,productName);
+		preparedStatement.setInt(2,productcost);
+		int rows=preparedStatement.executeUpdate();
+		return rows;
+	}
 
-		connection.close();
-		return buyprod;
+	
+		@Override
+		public BuyingProducts getProductByName(String pName) throws ClassNotFoundException, SQLException {
+			BuyingProducts buyprod=null;
+			Connection connection=OracleConnection.getConnection();
+			PreparedStatement preparedStatement=connection.prepareStatement("SELECT * FROM PRODUCTS WHERE PRODUCT_NAME=?");
+			preparedStatement.setString(1, pName);
+			ResultSet resultSet = preparedStatement.executeQuery();
+
+			if (resultSet.next()) {
+				int prodId=resultSet.getInt("PRODUCT_ID");
+				String prodName=resultSet.getString("PRODUCT_NAME");
+				int prodCost=resultSet.getInt("PRODUCT_COST");
+				int prodAvail=resultSet.getInt("PRODUCT_AVAIL");
+				buyprod=new BuyingProducts(prodName,prodId,prodCost,prodAvail);
+
+			}
+
+			connection.close();
+			return buyprod;
+		}
 	}
 
 	
 
-}
+

@@ -12,6 +12,7 @@ public interface OnlineShopingServiceDao {
 	public boolean registerUser(OnlineShoping onlineShoping) throws ClassNotFoundException, SQLException;
 	public boolean signIn(String userName,String passWord,long phone)throws ClassNotFoundException,SQLException;
 	List<ViewProducts> viewAllProducts()throws ClassNotFoundException,SQLException;
-	public BuyingProducts getDetailsByName(String product_name) throws ClassNotFoundException, SQLException;
-	public ProductBillPay generateProductPayslipByPname(String productName)throws ClassNotFoundException, SQLException;
+	public boolean getDetailsByName(String product_name,int product_cost) throws ClassNotFoundException, SQLException;
+	BuyingProducts getProductByName(String pName)throws ClassNotFoundException,SQLException;
+	ProductBillPay genrateProductBill(String pName)throws ClassNotFoundException,SQLException;
 }

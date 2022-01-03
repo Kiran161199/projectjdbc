@@ -34,22 +34,28 @@ public class OnlineShopingServiceImpl implements OnlineShopingServiceDao {
 	}
 	
 	@Override
-	public BuyingProducts getDetailsByName(String product_name) throws ClassNotFoundException, SQLException {
-		return onlineDao.buyingProducts(product_name);
+	public boolean getDetailsByName(String product_name,int product_cost) throws ClassNotFoundException, SQLException {
+		int rows=onlineDao.buyingProducts(product_name, product_cost);
+		if(rows>0)
+		return true;
+		return false;
 	}
-	
-	
 	@Override
-	public ProductBillPay generateProductPayslipByPname(String productName) throws ClassNotFoundException, SQLException {
-
-		BuyingProducts onlineShopingProducts=onlineDao.buyingProducts(productName);
+	public BuyingProducts getProductByName(String pName) throws ClassNotFoundException, SQLException {
+		return onlineDao.getProductByName(pName);
+	}
+	@Override
+	public ProductBillPay genrateProductBill(String pName) throws ClassNotFoundException, SQLException {
+		BuyingProducts onlineShopingProducts=onlineDao.getProductByName(pName);
 
 		ProductBillPay productBillPay=null;
 		if(onlineShopingProducts!=null) {
-			double gst=onlineShopingProducts.getProductCost()*.15;
-			double total=onlineShopingProducts.getProductCost()+gst;
+			double gst=onlineShopingProducts.getProdcost()*.15;
+			double total=onlineShopingProducts.getProdcost()+gst;
 			productBillPay=new ProductBillPay(onlineShopingProducts, gst, total);
 		}
 		return productBillPay;
 	}
+	
+	
 }
